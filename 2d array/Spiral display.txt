@@ -1,0 +1,76 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        
+        Scanner scn = new Scanner(System.in); 
+        
+        // take input for number of rows
+        int n  = scn.nextInt();
+        
+        // take input for number of columns
+        int m = scn.nextInt();
+        
+        // intialise the 2d arrray 
+        int[][] matx = new int[n][m];
+        
+        // craete a 2d array 
+        for(int i =0;i<n;i++){
+            for(int j= 0;j<m;j++){
+                matx[i][j] = scn.nextInt();
+            }
+        }
+        
+        spiral(matx);
+        
+    }
+    
+    public static void spiral(int[][] matx){
+        
+        int row = matx.length;
+        int col = matx[0].length;
+        
+        int rs = 0;
+        int cs = 0;
+        int re = row-1;
+        int ce = col-1;
+        int count= 0;
+        int total= row*col;
+        
+        while(count < total){
+            
+            // for left wall
+            for(int i = rs;i<=re&&count<total;i++){
+                System.out.println(matx[i][cs]);
+                count++;
+            }
+            cs++;
+        
+            // for bottom wall
+            for(int i =cs;i<=ce&&count<total;i++){
+                System.out.println(matx[re][i]);
+                count++;
+            }
+            re--;
+        
+            // for left wall
+            for(int i = re;i>=rs&&count<total;i--){
+                System.out.println(matx[i][ce]);
+                count++;
+            }
+            ce--;
+        
+            // for top wall
+            for(int i = ce;i>=cs&&count<total;i--){
+                System.out.println(matx[rs][i]);
+                count++;
+            }
+            rs++;
+        }
+        
+    }
+    
+}

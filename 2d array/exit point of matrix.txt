@@ -1,0 +1,94 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        
+        Scanner scn = new Scanner(System.in);
+        
+        // take input for rows 
+        int row = scn.nextInt();
+        
+        // take input for columns
+        int col = scn.nextInt();
+        
+        // intialise the 2d array of row*col
+        int[][] mat = new int[row][col];
+        
+        // fill the 2d array 
+        for(int i = 0;i<row;i++){
+            for(int j = 0;j< col;j++){
+                mat[i][j]= scn.nextInt();
+            }
+        }
+        
+        exit_pt(mat);
+        
+    }
+    
+    public static void exit_pt(int[][] mat){
+        
+        int row = mat.length ;
+        int col = mat[0].length ;
+        int r =0; 
+        int c =0;
+        
+        int dir = 0;
+        
+        while(r>=0 && r<=row-1  && c>=0 && c<=col-1){
+            
+            dir = (mat[r][c] + dir)%4;
+            
+            if (dir==0){
+                // east --> right
+                c++;
+                
+                if (c==col){
+                    c--;
+                    break;
+                }
+            }
+            
+            if (dir==1){
+                // South --> down
+                r++;
+                
+                if (r ==row){
+                    r--;
+                    break;
+                    
+                }
+            }
+            
+            if (dir==2){
+                // west --> left
+                c--;
+                
+                if (c ==-1){
+                    c++;
+                    break;
+                }
+            }
+            
+            
+            if (dir==3){
+                // north --> up
+                r--;
+                
+                if (r == -1){
+                    r++;
+                    break;
+                }
+                
+            }
+            
+        }
+        
+        System.out.println(r);
+        System.out.println(c);
+        
+    }
+    
+}

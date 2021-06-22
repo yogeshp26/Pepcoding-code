@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+    // write your code here
+    
+    Scanner scn = new Scanner(System.in);
+    
+    // take input for row of 2d array 
+    int n = scn.nextInt();
+    
+    // take input for column of 2d array 
+    int m = scn.nextInt();
+    
+    // intilasie the 2d array of size n *m 
+    int[][] matx = new int[n][m];
+    
+    // take input for each element of matrix
+    for(int i = 0;i<n;i++){
+        for(int j = 0;j<m;j++){
+            matx[i][j] = scn.nextInt();
+        }
+    }
+    
+    column_traverse(matx);
+
+    }
+    
+    public static void column_traverse(int[][] matx){
+        
+    // column traversing
+    // In columns traversign we have to traverse the content of each columns i.e.     row 
+    // when column = 0 ; then we have to read the arr[0][0],arr[1][0],arr[2][0]       .... so on 
+
+        int n = matx.length; // number of rows
+        int m = matx[0].length; // number of columns 
+
+        for(int i=0;i<m;i++){
+        
+            // if col number = even then traverse from up to down
+            if (i%2==0){
+                for(int j =0;j<n;j++){
+                    System.out.println(matx[j][i]);
+                }
+            }
+        
+            // if col number  = odd then from down to up
+            else{
+                for(int j=n-1;j>=0;j--){
+                    System.out.println(matx[j][i]);
+                }
+            }
+        }
+    
+    }
+}
