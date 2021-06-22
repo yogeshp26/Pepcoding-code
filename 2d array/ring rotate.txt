@@ -1,0 +1,228 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    
+    public static int[] fill_1d_array(int[][] mat, int r ,int s){
+        
+        int row = mat.length;
+        int col = mat[0].length;
+        
+        int rs = s-1;
+        int cs = s-1;
+        int re = row-s;
+        int ce = col-s;
+        
+        int count =0;
+        
+        int tot_ele_in_ring_2 = 2*(re-rs) + 2*(ce-cs);
+        
+        // itnialse the 1d array to fill with s =2 of matrx element
+        int[] arr = new int[tot_ele_in_ring_2];
+            
+        // left wall --> cs fixed, rs iterate till re
+        for(int i = rs;i<=re;i++){
+            arr[count] = mat[i][cs]; 
+            count++;
+            
+        }
+        cs++;
+         
+        // bottom wall --> re fixed , iterate cs till ce
+        for(int i= cs;i<=ce;i++){
+            arr[count]=mat[re][i];
+            count++;
+            
+        }
+        re--;
+        
+        // right wall--> ce fixed, iterate from re to rs
+        for(int i = re;i>=rs;i--){
+            arr[count]= mat[i][ce];
+            count++;
+        }
+        ce--;
+        
+        // top wall --> rs fixed , iterate from ce to cs
+        for(int i =ce;i>=cs;i--){
+            arr[count]=mat[rs][i];
+            count++;
+        }
+        rs++;
+            
+        return arr;
+    }
+    
+    public static void rotate(int[]arr , int r){
+        
+        // use the same code like rotate the array by r to right side
+        
+        // 1. reverse the array from (r-1,arr.length-1)
+        // 2. reverse the array from (0,r-2)
+        // 3. reverse the array from (0,arr.length-1)
+        
+        
+        int temp;
+        
+        r = r % arr.length;
+        
+        if (r<0){
+            r = r+arr.length;
+        }
+        
+    
+        
+        // 1. 
+        
+        int left = r-1;
+        int right = arr.length-1;
+        
+        while(left<=right){
+        
+            temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            
+            left++;
+            right--;
+        }
+        
+        // 2. 
+        
+        left = 0;
+        right = r-2;
+        
+        while(left<=right){
+            
+            temp = arr[left];
+            arr[left] =arr[right];
+            arr[right] =temp;
+            
+            left++;
+            right--;
+        }
+        
+        //3. 
+        
+        left = 0;
+        right = arr.length-1;
+        
+        while(left<=right){
+            
+            temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] =arr[left];
+            
+            left++;
+            right--;
+
+        }
+        
+    }
+    
+    
+    public static void fill_rotate_array_in_shell(int[][]mat,int s ,int []arr){
+        
+        
+        int row = mat.length;
+        int col = mat[0].length;
+        
+        int rs = s-1;
+        int cs = s-1;
+        
+        int re = row-s;
+        int ce = col-s;
+        
+        int index = 0;
+            
+        // left wall --> cs fixed, rs iterate till re
+        for(int j = rs;j<=re;j++){
+            mat[j][cs] = arr[index]; 
+            index++;
+        }
+        cs++;
+         
+        // bottom wall --> re fixed , iterate cs till ce
+        for(int j= cs;j<=ce;j++){
+            mat[re][j]=arr[index];
+            index++;
+        }
+        re--;
+        
+        // right wall--> ce fixed, iterate from re to rs
+        for(int j = re;j>=rs;j--){
+            mat[j][ce]=arr[index];
+            index++;
+        }
+        ce--;
+        
+        // top wall --> rs fixed , iterate from ce to cs
+        for(int j =ce;j>=cs;j--){
+            mat[rs][j]=arr[index];
+            index++;
+        }
+        rs++;
+            
+        
+        
+    }
+    
+    
+    
+    public static void shell_rotate(int[][] mat,int r, int s){
+        // 1. fill the 2shell in 1d array
+        int[] arr = fill_1d_array(mat,r,s);
+        
+        //2. rotate the 1d array with the help of reverse an array method
+        rotate(arr,r);
+        
+        //3. fill s shell of the matrix with the rotated array
+        fill_rotate_array_in_shell(mat,s,arr);
+        
+    }
+    
+    
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        
+        Scanner scn = new Scanner(System.in);
+        
+        // take input for row and col 
+        int row = scn.nextInt();
+        int col = scn.nextInt();
+        
+        // intiaise the 2d array 
+        int[][] mat = new int[row][col];
+        
+        // fill the array element
+        for(int i = 0;i<row;i++){
+            for(int j=0;j<col;j++){
+                mat[i][j] = scn.nextInt();
+            }
+        }
+        
+        // take input for ring number 
+        int s = scn.nextInt();
+        
+        // take input for rotation number i.e. anticlockwise or right side
+        int r = scn.nextInt();
+        
+        shell_rotate(mat, r, s);
+        display(mat);
+        
+        
+        
+    }
+
+    public static void display(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}
