@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        
+        Scanner scn = new Scanner(System.in);
+        
+        // take input for rows and col 
+        
+        int n = scn.nextInt();
+        
+        // intiliaset the 2d array 
+        int[][] mat = new int[n][n];
+        
+        // enter the element in 2d array
+        for(int i =0;i<n;i++){
+            for(int j=0;j<n;j++){
+                mat[i][j] = scn.nextInt();
+            }
+        }
+        
+        // print saddle_price
+        print_saddle_price(mat);
+        
+    }
+    
+    public static void print_saddle_price(int [][] mat){
+        
+        int row = mat.length;
+        int col = mat[0].length;
+        
+        int saddle_pr= 0;
+        
+        int min = mat[0][0];
+        int max = mat[0][0];
+        
+        
+        // Time complextiy:-  outer loop = O(n) 
+        // 1 inner loop i.e. j loop = O(n)
+        // 2 inner loop i.e. k loop = O(n-1)  // worst case when count = 0 always 
+        
+        // 3 total time complexity:-  O(n(n + n-1) = O(n(2n-1) = O(2n^2 - n) = 2*O(n^2) - O(n) = O(n^2) ==  time complexity 
+        
+        // we can't optimize it becuase it in 2d array we have traverse n rows and n column which leads to O(n^2)
+        
+        
+        int count = 0; // it will be use to store the column number of min value in ith row 
+        
+        // iterate through all rows and columns and find the min ele in the ith row one at a time 
+        for(int i = 0;i<row;i++){
+            for(int j =0;j<col;j++){
+                if (mat[i][j] < min){  // check if there is any ele less than min in ith row . if yes , update the min and count 
+                    min = mat[i][j];
+                    count = j;
+                    max = min;
+                }
+                else{
+                    count = 0;
+                    min = mat[i][0];
+                    max = min;
+                }
+            }
+            
+            // now check whether that min element is maximum in its column or not.
+            for(int k = count+1;k<row;k++){
+                if (mat[k][count]>max){      // if there is any ele in the its column that is greater than max(previously defined) than update the min and
+                    min = mat[k][count];     // keep on checking the next element in the same column 
+                }
+            }
+            
+            if(min == max){            // after checking if there is no element in the same column that is greater than max(previously defined at 54 line)
+                saddle_pr = min;      // check wehther min==max i.e. 11 == 11 or not . if yes then put that min value in saddle_pr 
+            }
+                                     // else put -1 in saddle_pr
+            else{
+                saddle_pr = -1;
+            }
+
+        }
+        
+        // after checking all the elements i.e. row and oclumn now print the saddle_price
+        
+        if (saddle_pr!=-1){
+            System.out.println(saddle_pr);
+        }
+        else{
+            System.out.println("Invalid input");
+        }
+        
+    }
+
+
+}
