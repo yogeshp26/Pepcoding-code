@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        
+        Scanner scn = new Scanner(System.in);
+        
+        
+        // take input for row and columns of 2d array / matrix ==> n = rows/columns 
+        int n = scn.nextInt();
+        
+        // intilase the 2d array of size n*n
+        int [][] mat = new int[n][n];
+        
+        // enter the elements of 2d array 
+        for(int i =0;i<n;i++){
+            for(int j = 0;j<n;j++){
+                mat[i][j] = scn.nextInt();
+            }
+        }
+        
+        
+        // get print upper traingular daignal element of matrix 
+        print_upper_daigonal(mat);
+        
+    }
+    
+    public static void print_upper_daigonal(int[][] mat){
+        
+        int row = mat.length;
+        int col = mat[0].length;
+        
+        int daig = 0;
+        
+        
+        while(daig<col){
+            
+            int rs = 0;
+            int cs = daig;
+            
+            int re = (row - 1) - daig;
+            
+            for(int i = rs;i<=re ;i++){
+                
+                System.out.println(mat[i][cs]);
+                cs++;
+            }
+            
+            daig++;
+        }
+        
+    }
+
+}
